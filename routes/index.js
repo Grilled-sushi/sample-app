@@ -1,9 +1,20 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+
+let users = new Set();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.route("/")
+  .get(function(req, res, next) {
+    res.render('index', {
+      title: 'サインイン',
+      users: users
+    });
+  })
+  .post(function(req, res, next) {
+    users.add([req.body.email, req.body.password]);
+    res.redirect("/");
+  });
+
 
 module.exports = router;
